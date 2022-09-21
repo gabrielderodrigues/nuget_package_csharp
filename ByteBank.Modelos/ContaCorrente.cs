@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ByteBank.Modelos
 {
+    /// <summary>
+    /// Define uma Conta Corrente do banco ByteBank.
+    /// </summary>
     public class ContaCorrente
     {
         private static int TaxaOperacao;
@@ -38,6 +41,12 @@ namespace ByteBank.Modelos
             }
         }
 
+        /// <summary>
+        /// Cria uma instância de ContaCorrente com os argumentos utilizados.
+        /// </summary>
+        /// <param name="agencia"> Representa o valor da propriedade <see cref="Agencia"/> e deve possuir um valor maior que zero. </param>
+        /// <param name="numero"> Representa o valor da propriedade <see cref="Numero"/> e deve possuir um valor maior que zero. </param>
+        /// <exception cref="ArgumentException"></exception>
         public ContaCorrente(int agencia, int numero)
         {
             if (numero <= 0)
@@ -56,7 +65,12 @@ namespace ByteBank.Modelos
             TotalDeContasCriadas++;
             TaxaOperacao = 30 / TotalDeContasCriadas;
         }
-
+        /// <summary>
+        /// Método que realiza Saques bancários.
+        /// </summary>
+        /// <param name="valor"> Representa o valor que o usuário deseja sacar. </param>
+        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="SaldoInsuficienteException"> Exception dada quando o usuário tenta sacar um valor menor do que o saldo atual. </exception>
         public void Sacar(double valor)
         {
             if (valor < 0)
@@ -73,11 +87,22 @@ namespace ByteBank.Modelos
             _saldo -= valor;
         }
 
+        /// <summary>
+        /// Método que realiza o Depósito bancário.
+        /// </summary>
+        /// <param name="valor"> Representa o valor que o usuário desejar depositar na conta. </param>
         public void Depositar(double valor)
         {
             _saldo += valor;
         }
 
+        /// <summary>
+        /// Método que realiza Transferências bancárias.
+        /// </summary>
+        /// <param name="valor"> Representa o valor que o usuário deseja transferir. </param>
+        /// <param name="contaDestino"> Representa a conta de destino para qual o usuário deseja realizar a transferência. </param>
+        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="OperacaoFinanceiraException"></exception>
         public void Transferir(double valor, ContaCorrente contaDestino)
         {
             if (valor < 0)
